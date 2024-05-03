@@ -1,0 +1,31 @@
+name: Build release
+on:
+  tags:
+    - '*'
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Generate a changelog
+        uses: orhun/git-cliff-action@v3
+        with:
+          config: cliff.toml
+          args: --current
+          env:
+            OUTPUT: current-version.md
+
+      - uses: graalvm/setup-graalvm@v1
+        with:
+          java-version: '21'
+          distribution: 'graalvm'
+          cache: 'gradle'
+
+      - name: Example step using Gradle plugin
+        run: gradlew nativeCompile
+
+      - uses: ncipollo/release-action@v1
+        with:
+          artifacts: "build/native/nativeCompile/cloudflareddns"
+          bodyFile: "current-version.md"
