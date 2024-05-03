@@ -45,14 +45,15 @@ function replaceVersion (file, searchRegex, newString) {
 replaceVersion(
     'build.gradle.kts',
     /version = \"v?[0-9.]+\.?[a-z]*\.?[0-9]*\"/g,
-    `version = "${version}"`,
+    `version = "${version.replace(/^v/, '')}"`,
 )
 
-await Promise.all([
+const files = [
     'CHANGELOG.md',
     'build.gradle.kts',
-].map((file) => exec(`git add ${file}`)))
+]
 
+await exec(`git add ${files.join(' ')}`)
 await exec(`git commit -m "🚀 bump version to ${version}"`)
 
 console.info(`🚀 bumped to version ${version}`)
