@@ -7,9 +7,9 @@ import kotlin.io.path.Path
 
 @Serializable
 data class Configuration(
-    val zoneId: String,
-    val apiKey: String,
-    val hostNames: List<String>,
+	val zoneId: String,
+	val apiToken: String,
+	val hostNames: List<String>,
 ) {
     companion object {
         private val jsonEncoder = Json {

@@ -15,30 +15,22 @@ data class DNSRecordsResponse(
 data class DNSRecord(
     val content: String,
     val name: String,
-    val proxied: Boolean,
+    val proxied: Boolean? = null,
     val type: String,
-    val comment: String,
+    val comment: String? = null,
     @SerialName("created_on")
     val createdOn: String,
     val id: String,
     val locked: Boolean,
-    val meta: Meta,
     @SerialName("modified_on")
     val modifiedOn: String,
     val proxiable: Boolean,
-    val tags: List<String>,
-    val ttl: Int,
+    val tags: List<String>? = null,
+    val ttl: Int? = null,
     @SerialName("zone_id")
-    val zoneId: String,
+    val zoneId: String? = null,
     @SerialName("zone_name")
     val zoneName: String
-)
-
-@Serializable
-data class Meta(
-    @SerialName("auto_added")
-    val autoAdded: Boolean,
-    val source: String
 )
 
 @Serializable

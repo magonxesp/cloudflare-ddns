@@ -9,8 +9,8 @@ import okhttp3.Request
 import okhttp3.RequestBody.Companion.toRequestBody
 
 class CloudflareClient(
-    private val zoneId: String,
-    private val apiKey: String,
+	private val zoneId: String,
+	private val apiToken: String,
 ) {
     private val httpClient = OkHttpClient()
 
@@ -21,16 +21,11 @@ class CloudflareClient(
         encodeDefaults = false
     }
 
-    private fun request(builder: Request.Builder.() -> Unit) = Request.Builder().apply {
-        header("X-Auth-Key", apiKey)
-        builder()
-    }.build()
-
-
     fun getDNSRecords(): List<DNSRecord> {
-        val request = request {
+        val request = Request.Builder().apply {
             url("https://api.cloudflare.com/client/v4/zones/$zoneId/dns_records")
-        }
+			header("Authorization", "Bearer $apiToken")
+        }.build()
 
         val response = httpClient.newCall(request).execute()
 
@@ -43,10 +38,11 @@ class CloudflareClient(
     }
 
     fun updateHostName(dnsRecord: DNSRecord, ipAddress: String) {
-        val request = request {
+        val request = Request.Builder().apply {
             url("https://api.cloudflare.com/client/v4/zones/$zoneId/dns_records/${dnsRecord.id}")
             patch(jsonEncoder.encodeToString(mapOf("content" to ipAddress)).toRequestBody("application/json".toMediaType()))
-        }
+			header("Authorization", "Bearer $apiToken")
+        }.build()
 
         val response = httpClient.newCall(request).execute()
 

@@ -10,18 +10,18 @@ class ConfigureCommand : CliktCommand(
     help = "Create a new configuration"
 ) {
     val zoneId by option().prompt("Cloudflare Zone ID")
-    val apiKey by option().prompt("Cloudflare API Key")
+    val apiToken by option().prompt("Cloudflare API Token")
     val hostNames by option().prompt("Host names will be updated (separated by comma)")
 
     override fun run() {
         val configuration = Configuration(
             zoneId = zoneId,
-            apiKey = apiKey,
+            apiToken = apiToken,
             hostNames = hostNames.trim().split(",").map { it.trim() }
         )
 
         configuration.save()
-        echo("\u2728 Done! godaddyddns command is now configured! \u2728")
+        echo("\u2728 Done! Configuration saved! \u2728")
         echo("Saved in ${Configuration.configFile.absolutePath}")
     }
 }
@@ -33,7 +33,7 @@ class SyncCommand : CliktCommand(
     override fun run() {
         val configuration = Configuration.read()
         val ipifyClient = IpifyClient()
-        val cloudflareClient = CloudflareClient(configuration.zoneId, configuration.apiKey)
+        val cloudflareClient = CloudflareClient(configuration.zoneId, configuration.apiToken)
 
         echo("Updating hostnames ip address")
 
