@@ -12,7 +12,7 @@ jobs:
         uses: orhun/git-cliff-action@v3
         with:
           config: cliff.toml
-          args: --current
+          args: --latest
           env:
             OUTPUT: current-version.md
 
