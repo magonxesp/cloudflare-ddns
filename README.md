@@ -25,9 +25,9 @@ The executable jar will be ```build/libs/cloudflare-ddns-0.0.0-all.jar```
 ### Using the executable file
 * Configure the program
 ```shell script
-$ godaddyddns configure
+$ cloudflareddns configure
 ```
 * Updating the configured hostnames ip with the current ip
 ```shell script
-$ godaddyddns sync
+$ cloudflareddns sync
 ```
