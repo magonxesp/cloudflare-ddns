@@ -17,7 +17,7 @@ data class Configuration(
             prettyPrint = true
         }
 
-        val configDir = Path(System.getProperty("user.home"), ".godaddy-ddns").toFile()
+        val configDir = Path(System.getProperty("user.home"), ".cloudflare-ddns").toFile()
         val configFile = Path(configDir.absolutePath, "settings.json").toFile()
 
         fun read(): Configuration {
