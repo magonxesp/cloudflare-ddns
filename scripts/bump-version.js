@@ -33,6 +33,7 @@ if (isFirstVersion && version == null) {
 
 console.info(`The new version is ${version}`)
 
+await exec(`git tag ${version}`)
 await exec('git cliff --bump -o CHANGELOG.md')
 
 function replaceVersion (file, searchRegex, newString) {
@@ -53,7 +54,6 @@ await Promise.all([
 ].map((file) => exec(`git add ${file}`)))
 
 await exec(`git commit -m "🚀 bump version to ${version}"`)
-await exec(`git tag ${version}`)
 
 console.info(`🚀 bumped to version ${version}`)
 console.info('now you can run "git push"')
