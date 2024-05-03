@@ -7,7 +7,7 @@ plugins {
 }
 
 group = "io.github.magonxesp"
-version = "v0.0.0"
+version = "v0.0.1"
 
 repositories {
     mavenCentral()
