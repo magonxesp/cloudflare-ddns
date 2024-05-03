@@ -2,6 +2,12 @@
 
 All notable changes to this project will be documented in this file.
 
+## [0.0.4] - 2024-05-03
+
+### Miscellaneous Tasks
+
+- Allow run manually
+
 ## [0.0.3] - 2024-05-03
 
 ### Miscellaneous Tasks
