@@ -3,13 +3,18 @@ import { parseArgs } from 'https://deno.land/std@0.223.0/cli/parse_args.ts'
 
 const flags = parseArgs(Deno.args)
 
-const isFirstVersion = flags?.firstVersion ?? false
+const isFirstVersion = flags['first-version'] ?? false
 const isAlphaVersion = flags?.alpha ?? false
 const isBetaVersion = flags?.beta ?? false
 
+let version
+
 const output = (await exec('git cliff --unreleased --bump --context', { output: OutputMode.Capture })).output
-const context = JSON.parse(output)
-let version = context[0]?.version?.replace(/^([0-9.]+\.?[a-z]*\.?[0-9]*)/, 'v$1')
+
+if (output != null && output !== '') {
+    const context = JSON.parse(output)
+    version = context[0]?.version?.replace(/^([0-9.]+\.?[a-z]*\.?[0-9]*)/, 'v$1')
+}
 
 if (version == null && !isFirstVersion) {
     console.info('There is not a new version available')
