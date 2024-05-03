@@ -2,6 +2,16 @@
 
 All notable changes to this project will be documented in this file.
 
+## [0.0.5] - 2024-05-03
+
+### Bug Fixes
+
+- Git add command
+
+### Miscellaneous Tasks
+
+- Fix gradle command
+
 ## [0.0.4] - 2024-05-03
 
 ### Miscellaneous Tasks
