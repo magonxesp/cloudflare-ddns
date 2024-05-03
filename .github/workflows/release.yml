@@ -1,8 +1,11 @@
 name: Build release
+permissions:
+  contents: write
 on:
   push:
-    tags:
-      - '*'
+    tags-ignore:
+      - '*-alpha.*'
+      - '*-beta.*'
 
 jobs:
   build:
@@ -13,9 +16,7 @@ jobs:
         uses: orhun/git-cliff-action@v3
         with:
           config: cliff.toml
-          args: --latest
-          env:
-            OUTPUT: current-version.md
+          args: --latest -o current-version.md
 
       - uses: graalvm/setup-graalvm@v1
         with:
@@ -28,5 +29,5 @@ jobs:
 
       - uses: ncipollo/release-action@v1
         with:
-          artifacts: "build/native/nativeCompile/cloudflareddns"
-          bodyFile: "current-version.md"
+          artifacts: 'build/native/nativeCompile/cloudflareddns'
+          bodyFile: 'current-version.md'
