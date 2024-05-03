@@ -2,6 +2,12 @@
 
 All notable changes to this project will be documented in this file.
 
+## [0.0.3] - 2024-05-03
+
+### Miscellaneous Tasks
+
+- Fix mapping not expected
+
 ## [0.0.2] - 2024-05-03
 
 ### Bug Fixes
