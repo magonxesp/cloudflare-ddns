@@ -19,8 +19,11 @@ dependencies {
     testRuntimeOnly("org.junit.platform:junit-platform-launcher")
 
     implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.6.3")
+	implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.8.1")
     implementation("com.github.ajalt.clikt:clikt:4.2.2")
     implementation("com.squareup.okhttp3:okhttp:5.0.0-alpha.14")
+	implementation("org.slf4j:slf4j-api:2.0.13")
+	implementation("org.slf4j:slf4j-simple:2.0.13")
 }
 
 java {

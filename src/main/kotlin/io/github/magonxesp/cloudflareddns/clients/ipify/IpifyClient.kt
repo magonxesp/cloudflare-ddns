@@ -1,4 +1,4 @@
-package io.github.magonxesp.cloudflareddns
+package io.github.magonxesp.cloudflareddns.clients.ipify
 
 import okhttp3.OkHttpClient
 import okhttp3.Request

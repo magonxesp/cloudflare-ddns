@@ -1,4 +1,4 @@
-package io.github.magonxesp.cloudflareddns
+package io.github.magonxesp.cloudflareddns.clients.cloudflare
 
 import kotlinx.serialization.ExperimentalSerializationApi
 import kotlinx.serialization.encodeToString

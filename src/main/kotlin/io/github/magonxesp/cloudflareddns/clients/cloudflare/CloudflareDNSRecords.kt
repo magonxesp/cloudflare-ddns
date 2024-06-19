@@ -1,13 +1,13 @@
-package io.github.magonxesp.cloudflareddns
+package io.github.magonxesp.cloudflareddns.clients.cloudflare
 
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 
 @Serializable
 data class DNSRecordsResponse(
-    val success: Boolean,
-    val result: List<DNSRecord>,
-    @SerialName("result_info")
+	val success: Boolean,
+	val result: List<DNSRecord>,
+	@SerialName("result_info")
     val resultInfo: ResultInfo
 )
 
