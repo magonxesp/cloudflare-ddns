@@ -21,7 +21,7 @@ data class DNSRecord(
     @SerialName("created_on")
     val createdOn: String,
     val id: String,
-    val locked: Boolean,
+    val locked: Boolean? = null,
     @SerialName("modified_on")
     val modifiedOn: String,
     val proxiable: Boolean,
