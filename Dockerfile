@@ -12,4 +12,5 @@ WORKDIR /app
 
 COPY --from=build /build/build/libs/cloudflare-ddns-all.jar /app/cloudflare-ddns.jar
 
-CMD ["java", "-jar", "/app/cloudflare-ddns.jar", "--keep-syncing"]
+ENTRYPOINT ["java", "-jar", "/app/cloudflare-ddns.jar"]
+CMD ["--keep-syncing"]
