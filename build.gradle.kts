@@ -4,7 +4,7 @@ plugins {
 }
 
 group = "io.github.magonxesp"
-version = "0.0.5"
+version = "0.1.0"
 
 repositories {
     mavenCentral()
@@ -31,7 +31,7 @@ kotlin {
 	sourceSets {
 		nativeMain {
 			dependencies {
-				val ktor_version = "2.3.12"
+				val ktor_version = "0.1.0"
 
 				implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.6.3")
 				implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.8.1")

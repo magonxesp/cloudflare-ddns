@@ -2,6 +2,31 @@
 
 All notable changes to this project will be documented in this file.
 
+## [0.1.0] - 2024-09-25
+
+### Features
+
+- Use Kotlin/Native instead of Kotlin/JVM with GraalVM
+- Compile native binaries in github actions
+
+## [0.0.8] - 2024-09-20
+
+### Miscellaneous Tasks
+
+- Fix
+
+## [0.0.7] - 2024-09-20
+
+### Features
+
+- Build docker image
+
+## [0.0.6] - 2024-08-14
+
+### Bug Fixes
+
+- Kotlinx.serialization.MissingFieldException: Field 'locked' is required for type with serial name 'io.github.magonxesp.cloudflareddns.DNSRecord', but it was missing at path: $.result[0]
+
 ## [0.0.5] - 2024-05-03
 
 ### Bug Fixes
