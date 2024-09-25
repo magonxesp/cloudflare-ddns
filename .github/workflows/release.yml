@@ -27,6 +27,11 @@ jobs:
       - name: Setup Gradle
         uses: gradle/actions/setup-gradle@v3
 
+      - name: Install system dependencies
+        run: |
+          apt update
+          apt install -y curl libcurl4-gnutls-dev
+
       - name: Compile native executable
         run: ./gradlew build
 
