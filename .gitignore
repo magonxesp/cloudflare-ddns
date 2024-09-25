@@ -147,3 +147,4 @@ godaddy_ddns.sh
 
 # Ignore Gradle build output directory
 build
+.kotlin

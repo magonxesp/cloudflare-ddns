@@ -42,3 +42,9 @@ data class ResultInfo(
     @SerialName("total_count")
     val totalCount: Int
 )
+
+@Serializable
+data class DNSUpdateRequest(
+	@SerialName("content")
+	val ipAddress: String
+)

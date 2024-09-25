@@ -1,12 +1,6 @@
-import com.github.jengelman.gradle.plugins.shadow.tasks.ShadowJar
-import org.jetbrains.kotlin.gradle.plugin.mpp.pm20.util.archivesName
-
 plugins {
-    kotlin("jvm") version "1.9.22"
-    kotlin("plugin.serialization") version "1.9.22"
-    id("org.graalvm.buildtools.native") version "0.10.1"
-    id("com.github.johnrengelman.shadow") version "8.1.1"
-    application
+    kotlin("multiplatform") version "2.0.20"
+    kotlin("plugin.serialization") version "2.0.20"
 }
 
 group = "io.github.magonxesp"
@@ -16,49 +10,39 @@ repositories {
     mavenCentral()
 }
 
-dependencies {
-    testImplementation("org.jetbrains.kotlin:kotlin-test-junit5")
-    testImplementation("org.junit.jupiter:junit-jupiter-engine:5.10.1")
-    testRuntimeOnly("org.junit.platform:junit-platform-launcher")
+kotlin {
+	jvmToolchain(21)
 
-    implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.6.3")
-	implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.8.1")
-    implementation("com.github.ajalt.clikt:clikt:4.2.2")
-    implementation("com.squareup.okhttp3:okhttp:5.0.0-alpha.14")
-	implementation("org.slf4j:slf4j-api:2.0.13")
-	implementation("org.slf4j:slf4j-simple:2.0.13")
-}
+	linuxX64 {
+		binaries {
+			executable {
+				entryPoint = "io.github.magonxesp.cloudflareddns.main"
+			}
+		}
+	}
+	mingwX64 {
+		binaries {
+			executable {
+				entryPoint = "io.github.magonxesp.cloudflareddns.main"
+			}
+		}
+	}
 
-java {
-    toolchain {
-        languageVersion = JavaLanguageVersion.of(21)
-    }
-}
+	sourceSets {
+		nativeMain {
+			dependencies {
+				val ktor_version = "2.3.12"
 
-application {
-    // Define the main class for the application.
-    mainClass = "io.github.magonxesp.cloudflareddns.MainKt"
-}
-
-tasks.named<Test>("test") {
-    // Use JUnit Platform for unit tests.
-    useJUnitPlatform()
-}
-
-tasks.withType<ShadowJar> {
-	archiveVersion = ""
-}
-
-graalvmNative {
-    binaries {
-        named("main") {
-            imageName.set("cloudflareddns")
-            mainClass.set("io.github.magonxesp.cloudflareddns.MainKt")
-        }
-    }
-    binaries.all {
-        buildArgs.add("--verbose")
-    }
-
-    toolchainDetection.set(true)
+				implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.6.3")
+				implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.8.1")
+				implementation("org.jetbrains.kotlinx:kotlinx-datetime:0.6.1")
+				implementation("com.github.ajalt.clikt:clikt:4.2.2")
+				implementation("io.ktor:ktor-client-core:$ktor_version")
+				implementation("io.ktor:ktor-client-curl:$ktor_version")
+				implementation("io.ktor:ktor-client-content-negotiation:$ktor_version")
+				implementation("io.ktor:ktor-serialization-kotlinx-json:$ktor_version")
+				implementation("com.squareup.okio:okio:3.9.1")
+			}
+		}
+	}
 }

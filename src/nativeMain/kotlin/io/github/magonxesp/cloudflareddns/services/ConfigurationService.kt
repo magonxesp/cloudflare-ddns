@@ -1,11 +1,9 @@
 package io.github.magonxesp.cloudflareddns.services
 
 import io.github.magonxesp.cloudflareddns.Configuration
-import org.slf4j.LoggerFactory
+import io.github.magonxesp.cloudflareddns.Log
 
 class ConfigurationService {
-	private val logger = LoggerFactory.getLogger(this::class.java)
-
 	fun configure(
 		zoneId: String,
 		apiToken: String,
@@ -18,7 +16,7 @@ class ConfigurationService {
 		)
 
 		configuration.save()
-		logger.info("\u2728 Done! Configuration saved! \u2728")
-		logger.info("Saved in ${Configuration.configFile.absolutePath}")
+		Log.info("\u2728 Done! Configuration saved! \u2728")
+		Log.info("Saved in ${Configuration.configFile}")
 	}
 }
