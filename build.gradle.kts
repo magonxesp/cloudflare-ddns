@@ -31,7 +31,7 @@ kotlin {
 	sourceSets {
 		nativeMain {
 			dependencies {
-				val ktor_version = "0.1.0"
+				val ktor_version = "2.3.12"
 
 				implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.6.3")
 				implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.8.1")

@@ -44,7 +44,7 @@ function replaceVersion (file, searchRegex, newString) {
 
 replaceVersion(
     'build.gradle.kts',
-    /version = \"v?[0-9.]+\.?[a-z]*\.?[0-9]*\"/g,
+    /^version = \"v?[0-9.]+\.?[a-z]*\.?[0-9]*\"/gm,
     `version = "${version.replace(/^v/, '')}"`,
 )
 
