@@ -1,10 +1,12 @@
 package io.github.magonxesp.cloudflareddns
 
+import kotlinx.datetime.Clock
 import kotlinx.serialization.Serializable
 import kotlinx.serialization.encodeToString
 import kotlinx.serialization.json.Json
 import okio.FileSystem
 import okio.Path.Companion.toPath
+import kotlin.io.path.Path
 
 @Serializable
 data class Configuration(
@@ -18,16 +20,17 @@ data class Configuration(
             prettyPrint = true
         }
 
-        val configDir = path(homeDir, ".cloudflare-ddns").toPath()
-        val configFile = path(configDir.toString(), "settings.json").toPath()
+		val homeDir = System.getProperty("user.home")
+        val configDir = Path(homeDir, ".cloudflare-ddns").toFile()
+        val configFile = Path(configDir.toString(), "settings.json").toFile()
 
         fun read(): Configuration {
-            if (!FileSystem.SYSTEM.exists(configFile)) {
+            if (!configFile.exists()) {
                 error("Configuration file at $configFile not found!, " +
-                        "use the \"godaddyddns configure\" command for create a new one")
+                        "use the \"cloudflare-ddns configure\" command for create a new one")
             }
 
-            val json = FileSystem.SYSTEM.read(configFile) { readUtf8() }
+            val json = configFile.readText()
             return jsonEncoder.decodeFromString<Configuration>(json)
         }
     }
@@ -35,12 +38,10 @@ data class Configuration(
     fun save() {
         val json = jsonEncoder.encodeToString(this)
 
-		if (!FileSystem.SYSTEM.exists(configDir)) {
-			FileSystem.SYSTEM.createDirectories(configDir)
+		if (!configDir.exists()) {
+			configDir.mkdirs()
 		}
 
-		FileSystem.SYSTEM.write(configFile) {
-			writeUtf8(json)
-		}
+		configFile.writeText(json)
     }
 }

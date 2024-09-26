@@ -5,6 +5,7 @@ import com.github.ajalt.clikt.parameters.options.flag
 import com.github.ajalt.clikt.parameters.options.option
 import io.github.magonxesp.cloudflareddns.clients.cloudflare.CloudflareClient
 import io.github.magonxesp.cloudflareddns.Configuration
+import io.github.magonxesp.cloudflareddns.clients.httpClient
 import io.github.magonxesp.cloudflareddns.clients.ipify.IpifyClient
 import io.github.magonxesp.cloudflareddns.services.SyncService
 import kotlinx.coroutines.runBlocking
@@ -20,5 +21,6 @@ class SyncCommand : CliktCommand(
 		val syncService = SyncService(ipifyClient, cloudflareClient, configuration)
 
 		syncService.sync()
+		httpClient.close()
     }
 }

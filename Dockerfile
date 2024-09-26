@@ -1,19 +1,15 @@
-FROM eclipse-temurin:21-jdk-noble AS build
+FROM eclipse-temurin:21-jdk AS build
 
-WORKDIR /build
+WORKDIR /builder
 
 COPY . .
 
-RUN apt update && apt install -y curl libcurl4-gnutls-dev
-RUN --mount=type=cache,target=/root/.gradle,sharing=private ./gradlew linuxX64Binaries
+RUN --mount=type=cache,target=/root/.gradle,sharing=private ./gradlew build
 
-FROM ubuntu:noble
-# Ubuntu 24.04.1
+FROM eclipse-temurin:21-jre
 
 WORKDIR /app
 
-COPY --from=build /build/build/bin/linuxX64/releaseExecutable/cloudflare-ddns.kexe /app/cloudflare-ddns
-RUN apt update && apt install -y curl libcurl4-gnutls-dev
-RUN chmod +x /app/cloudflare-ddns
+COPY --from=build /builder/build/libs/cloudflare-ddns.jar /app/cloudflare-ddns.jar
 
-ENTRYPOINT ["/app/cloudflare-ddns"]
+ENTRYPOINT ["java", "-Xmx25m", "-jar", "/app/cloudflare-ddns.jar"]

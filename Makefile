@@ -1,10 +1,10 @@
 .PHONY: first-version bump-version build
 
 first-version:
-	@deno run --allow-run --allow-write --allow-read scripts/bump-version.js --first-version
+	@python scripts/bump-version.py --first-version
 
 bump-version:
-	@deno run --allow-run --allow-write --allow-read scripts/bump-version.js
+	@python scripts/bump-version.py
 
 build:
-	./gradlew nativeCompile
+	./gradlew build

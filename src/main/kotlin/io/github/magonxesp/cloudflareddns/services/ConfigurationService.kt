@@ -1,7 +1,7 @@
 package io.github.magonxesp.cloudflareddns.services
 
 import io.github.magonxesp.cloudflareddns.Configuration
-import io.github.magonxesp.cloudflareddns.Log
+import io.github.magonxesp.cloudflareddns.logger
 
 class ConfigurationService {
 	fun configure(
@@ -16,7 +16,7 @@ class ConfigurationService {
 		)
 
 		configuration.save()
-		Log.info("\u2728 Done! Configuration saved! \u2728")
-		Log.info("Saved in ${Configuration.configFile}")
+		logger.info("\u2728 Done! Configuration saved! \u2728")
+		logger.info("Saved in ${Configuration.configFile}")
 	}
 }

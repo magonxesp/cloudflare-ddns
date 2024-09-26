@@ -13,11 +13,15 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
+
       - name: Generate a changelog
-        uses: orhun/git-cliff-action@v3
+        uses: orhun/git-cliff-action@main
+        id: git-cliff
         with:
           config: cliff.toml
-          args: --latest -o current-version.md
+          args: --latest --no-exec --github-repo ${{ github.repository }}
+        env:
+          OUTPUT: CHANGES.md
 
       - uses: actions/setup-java@v4
         with:
@@ -27,21 +31,10 @@ jobs:
       - name: Setup Gradle
         uses: gradle/actions/setup-gradle@v3
 
-      - name: Install system dependencies
-        run: |
-          sudo apt update
-          sudo apt install -y curl libcurl4-gnutls-dev
-
-      - name: Compile native executable
+      - name: Compile Jar
         run: ./gradlew build
-
-      - name: Rename binaries
-        run: |
-          mkdir bin
-          mv build/bin/linuxX64/releaseExecutable/cloudflare-ddns.kexe bin/cloudflare-ddns-linux-x64
-          mv build/bin/mingwX64/releaseExecutable/cloudflare-ddns.exe bin/cloudflare-ddns-windows-x64.exe
 
       - uses: ncipollo/release-action@v1
         with:
-          artifacts: 'bin/*'
-          bodyFile: 'current-version.md'
+          artifacts: 'build/lib/cloudflare-ddns.jar'
+          bodyFile: 'CHANGES.md'
