@@ -58,16 +58,9 @@ replace_version(
     replacement=f'version = "{version_code}"'
 )
 
-replace_version(
-    file_path='README.md',
-    search=r'io\.github\.magonxesp:([a-z\-]+):v?[0-9.]+\-?[a-z]*\.?[0-9]*',
-    replacement=r'io.github.magonxesp:\1:' + version_code
-)
-
 files = [
     'CHANGELOG.md',
     'build.gradle.kts',
-    'README.md'
 ]
 
 for file in files:
