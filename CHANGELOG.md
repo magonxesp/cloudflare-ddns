@@ -2,6 +2,12 @@
 
 All notable changes to this project will be documented in this file.
 
+## [0.2.1] - 2024-09-26
+
+### Miscellaneous Tasks
+
+- Fix artifact path
+
 ## [0.2.0] - 2024-09-26
 
 ### Bug Fixes
