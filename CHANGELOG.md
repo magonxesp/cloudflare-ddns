@@ -2,6 +2,17 @@
 
 All notable changes to this project will be documented in this file.
 
+## [0.2.0] - 2024-09-26
+
+### Bug Fixes
+
+- Bump version script
+
+### Features
+
+- Return to jvm version but better
+- Update README.md
+
 ## [0.1.4] - 2024-09-25
 
 ### Miscellaneous Tasks
