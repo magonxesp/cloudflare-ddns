@@ -36,5 +36,5 @@ jobs:
 
       - uses: ncipollo/release-action@v1
         with:
-          artifacts: 'build/lib/cloudflare-ddns.jar'
+          artifacts: 'build/libs/cloudflare-ddns.jar'
           bodyFile: 'CHANGES.md'
