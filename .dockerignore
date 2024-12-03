@@ -4,5 +4,5 @@
 .gitattributes
 .gradle
 .kotlin
-build
 dist
+release

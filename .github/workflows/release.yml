@@ -38,7 +38,7 @@ jobs:
         run: ./gradlew -PgitTag=${{ github.ref_name }} build
 
       - name: Make .deb package
-        run: make release-debian
+        run: scripts/docker-make-deb-package.sh
 
       - uses: ncipollo/release-action@v1
         with:

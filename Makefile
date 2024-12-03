@@ -10,4 +10,7 @@ build:
 	./gradlew build
 
 release-debian:
-	./scripts/deb-package.sh
+	./scripts/make-package.sh debian
+
+release-macos:
+	./scripts/make-package.sh macos
