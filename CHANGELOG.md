@@ -2,6 +2,12 @@
 
 All notable changes to this project will be documented in this file.
 
+## [0.3.5] - 2024-12-03
+
+### Miscellaneous Tasks
+
+- Build deb package inside docker container
+
 ## [0.3.4] - 2024-12-03
 
 ### Miscellaneous Tasks
