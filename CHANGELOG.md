@@ -2,6 +2,12 @@
 
 All notable changes to this project will be documented in this file.
 
+## [0.3.4] - 2024-12-03
+
+### Miscellaneous Tasks
+
+- Set tmp directory to deb package
+
 ## [0.3.3] - 2024-12-03
 
 ### Miscellaneous Tasks
