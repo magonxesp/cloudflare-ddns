@@ -2,6 +2,12 @@
 
 All notable changes to this project will be documented in this file.
 
+## [0.3.6] - 2024-12-03
+
+### Miscellaneous Tasks
+
+- Don't build deb package
+
 ## [0.3.5] - 2024-12-03
 
 ### Miscellaneous Tasks
