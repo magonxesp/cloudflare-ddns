@@ -2,6 +2,14 @@
 
 All notable changes to this project will be documented in this file.
 
+## [0.3.0] - 2024-12-03
+
+### Features
+
+- Allow set the configuration path
+- Generate .deb package
+- Allow configure logs output and format
+
 ## [0.2.1] - 2024-09-26
 
 ### Miscellaneous Tasks
