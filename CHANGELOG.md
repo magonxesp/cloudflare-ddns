@@ -2,6 +2,12 @@
 
 All notable changes to this project will be documented in this file.
 
+## [0.3.1] - 2024-12-03
+
+### Miscellaneous Tasks
+
+- Create .deb package on release
+
 ## [0.3.0] - 2024-12-03
 
 ### Features
