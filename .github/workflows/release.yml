@@ -32,9 +32,9 @@ jobs:
         uses: gradle/actions/setup-gradle@v3
 
       - name: Compile Jar
-        run: ./gradlew build
+        run: ./gradlew -PgitTag=${{ github.ref_name }} build
 
       - uses: ncipollo/release-action@v1
         with:
-          artifacts: 'build/libs/cloudflare-ddns.jar'
+          artifacts: 'build/libs/cloudflare-ddns-*-all.jar,release/*'
           bodyFile: 'CHANGES.md'

@@ -1,0 +1,4 @@
+#!/bin/sh
+
+rm /usr/bin/cloudflare-ddns
+ln -s /opt/cloudflare-ddns/bin/cloudflare-ddns /usr/bin/cloudflare-ddns

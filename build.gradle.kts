@@ -9,10 +9,15 @@ plugins {
 }
 
 group = "io.github.magonxesp"
-version = "0.2.1"
+version = project.properties["gitTag"] ?: "0.2.1"
 
 repositories {
     mavenCentral()
+}
+
+java {
+	sourceCompatibility = JavaVersion.VERSION_21
+	targetCompatibility = JavaVersion.VERSION_21
 }
 
 dependencies {
@@ -39,6 +44,11 @@ application {
 }
 
 tasks.withType<ShadowJar> {
-	archiveFileName = "cloudflare-ddns.jar"
 	transform(Log4j2PluginsCacheFileTransformer())
+}
+
+tasks.withType<Jar> {
+	doLast {
+		File("build/libs/version.txt").writeText(project.version as String)
+	}
 }

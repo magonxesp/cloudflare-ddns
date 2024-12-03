@@ -10,6 +10,6 @@ FROM eclipse-temurin:21-jre
 
 WORKDIR /app
 
-COPY --from=build /builder/build/libs/cloudflare-ddns.jar /app/cloudflare-ddns.jar
+COPY --from=build /builder/build/libs/cloudflare-ddns-*-all.jar /app/cloudflare-ddns.jar
 
-ENTRYPOINT ["java", "-Xmx25m", "-jar", "/app/cloudflare-ddns.jar"]
+ENTRYPOINT ["java", "-jar", "/app/cloudflare-ddns.jar"]

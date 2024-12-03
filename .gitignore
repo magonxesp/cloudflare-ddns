@@ -148,3 +148,6 @@ godaddy_ddns.sh
 # Ignore Gradle build output directory
 build
 .kotlin
+
+# Ignore jpackage output directory
+release
