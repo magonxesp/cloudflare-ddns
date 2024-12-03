@@ -14,6 +14,9 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
+      - name: Install packages
+        run: apt update && apt install make
+
       - name: Generate a changelog
         uses: orhun/git-cliff-action@main
         id: git-cliff
@@ -33,6 +36,9 @@ jobs:
 
       - name: Compile Jar
         run: ./gradlew -PgitTag=${{ github.ref_name }} build
+
+      - name: Make .deb package
+        run: make release-debian
 
       - uses: ncipollo/release-action@v1
         with:
