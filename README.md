@@ -1,5 +1,5 @@
 # Cloudflare DDNS
-Program for update the hostnames ip on Cloudflare DNS records
+Update the DNS records with your current ip on Cloudflare
 
 Requeriments:
 * Gradle 8.7
