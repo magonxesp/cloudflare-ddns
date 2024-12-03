@@ -1,26 +1,27 @@
 package io.github.magonxesp.cloudflareddns.commands
 
-import com.github.ajalt.clikt.core.CliktCommand
-import com.github.ajalt.clikt.parameters.options.flag
-import com.github.ajalt.clikt.parameters.options.option
-import io.github.magonxesp.cloudflareddns.clients.cloudflare.CloudflareClient
-import io.github.magonxesp.cloudflareddns.Configuration
 import io.github.magonxesp.cloudflareddns.clients.httpClient
-import io.github.magonxesp.cloudflareddns.clients.ipify.IpifyClient
+import io.github.magonxesp.cloudflareddns.exception.ConfigurationNotFoundException
+import io.github.magonxesp.cloudflareddns.services.ConfigurationService
 import io.github.magonxesp.cloudflareddns.services.SyncService
-import kotlinx.coroutines.runBlocking
 
-class SyncCommand : CliktCommand(
+class SyncCommand : ConfigurationFileAwareCommand(
     name = "sync",
     help = "Update the current public IP address to the configured Cloudflare's hostnames"
 ) {
-    override fun run() = runBlocking {
-        val configuration = Configuration.read()
-        val ipifyClient = IpifyClient()
-        val cloudflareClient = CloudflareClient(configuration.zoneId, configuration.apiToken)
-		val syncService = SyncService(ipifyClient, cloudflareClient, configuration)
+    override fun run() {
+		echo("\uD83D\uDC49\uFE0F Updating hostnames ip address")
+		val syncService = SyncService(ConfigurationService(configFile))
 
-		syncService.sync()
+		syncService.sync().onSuccess {
+			echo("\uD83D\uDFE2 Done! All hostnames are updated to Cloudflare!")
+		}.onFailure {
+			when (it) {
+				is ConfigurationNotFoundException -> echo("\uD83D\uDE31 The configuration file is missing, try to run cloudflare-ddns configure")
+				else -> echo("\uD83D\uDE31 Hostnames update process has been failed! Check out the logs for more information")
+			}
+		}
+
 		httpClient.close()
     }
 }

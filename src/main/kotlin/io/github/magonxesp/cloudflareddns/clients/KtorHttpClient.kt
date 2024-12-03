@@ -10,23 +10,23 @@ import kotlinx.serialization.json.Json
 
 @OptIn(ExperimentalSerializationApi::class)
 val httpClient = HttpClient {
-	install(HttpRequestRetry) {
-		retryOnServerErrors(maxRetries = 3)
-		exponentialDelay()
-	}
+		install(HttpRequestRetry) {
+			retryOnServerErrors(maxRetries = 3)
+			exponentialDelay()
+		}
 
-	install(Logging) {
-		logger = Logger.DEFAULT
-		level = LogLevel.HEADERS
-	}
+		install(Logging) {
+			logger = Logger.DEFAULT
+			level = LogLevel.HEADERS
+		}
 
-	install(ContentNegotiation) {
-		json(Json {
-			ignoreUnknownKeys = true
-			explicitNulls = false
-			encodeDefaults = false
-		})
-	}
+		install(ContentNegotiation) {
+			json(Json {
+				ignoreUnknownKeys = true
+				explicitNulls = false
+				encodeDefaults = false
+			})
+		}
 
-	expectSuccess = true
-}
+		expectSuccess = true
+	}

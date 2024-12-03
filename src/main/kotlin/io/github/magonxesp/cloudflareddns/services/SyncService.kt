@@ -1,32 +1,29 @@
 package io.github.magonxesp.cloudflareddns.services
 
-import io.github.magonxesp.cloudflareddns.Configuration
 import io.github.magonxesp.cloudflareddns.clients.cloudflare.CloudflareClient
 import io.github.magonxesp.cloudflareddns.clients.ipify.IpifyClient
 import io.github.magonxesp.cloudflareddns.logger
+import io.github.magonxesp.cloudflareddns.runCatchingSafe
+import kotlinx.coroutines.runBlocking
 
-class SyncService(
-	private val ipifyClient: IpifyClient,
-	private val cloudflareClient: CloudflareClient,
-	private val configuration: Configuration
-) {
+class SyncService(private val configurationService: ConfigurationService) {
+	fun sync(): Result<Unit> = runCatchingSafe {
+		runBlocking {
+			val configuration = configurationService.read()
+			val client = CloudflareClient(configuration.zoneId, configuration.apiToken)
+			val currentIpAddress = IpifyClient().fetchCurrentPublicIpAddress()
 
-	suspend fun sync() {
-		logger.info("Updating hostnames ip address")
+			logger.info("Current ip address: $currentIpAddress")
+			logger.info("Hostnames will be updated to ip address $currentIpAddress")
 
-		val currentIpAddress = ipifyClient.fetchCurrentPublicIpAddress()
-		logger.info("Current ip address: $currentIpAddress")
-		logger.info("⚠\uFE0F Hostnames will be updated to ip address $currentIpAddress ⚠\uFE0F")
+			val records = client.getDNSRecords().filter {
+				configuration.hostNames.contains(it.name)
+			}
 
-		val records = cloudflareClient.getDNSRecords().filter {
-			configuration.hostNames.contains(it.name)
+			for (record in records) {
+				client.updateHostName(record, currentIpAddress)
+				logger.info("Hostname ${record.name} updated!")
+			}
 		}
-
-		for (record in records) {
-			cloudflareClient.updateHostName(record, currentIpAddress)
-			logger.info("\uD83D\uDFE2 Hostname ${record.name} updated!")
-		}
-
-		logger.info("\u2728 Done! All hostnames are updated to Cloudflare! \u2728")
 	}
 }
