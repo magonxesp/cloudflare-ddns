@@ -37,9 +37,6 @@ jobs:
       - name: Compile Jar
         run: ./gradlew -PgitTag=${{ github.ref_name }} build
 
-      - name: Make .deb package
-        run: scripts/docker-make-deb-package.sh
-
       - uses: ncipollo/release-action@v1
         with:
           artifacts: 'build/libs/cloudflare-ddns-*-all.jar,release/*'
