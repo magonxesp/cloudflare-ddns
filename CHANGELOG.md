@@ -2,6 +2,17 @@
 
 All notable changes to this project will be documented in this file.
 
+## [0.3.7] - 2024-12-11
+
+### Miscellaneous Tasks
+
+- Create release script
+- Fix github release script
+
+### Refactor
+
+- Set config file path on all commands
+
 ## [0.3.6] - 2024-12-03
 
 ### Miscellaneous Tasks
