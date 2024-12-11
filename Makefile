@@ -1,4 +1,4 @@
-.PHONY: first-version bump-version build release-linux
+.PHONY: first-version bump-version build release-linux publish-release
 
 first-version:
 	@python scripts/bump-version.py --first-version
@@ -14,3 +14,6 @@ release-debian:
 
 release-macos:
 	./scripts/make-package.sh macos
+
+publish-release:
+	./scripts/create-github-release.sh

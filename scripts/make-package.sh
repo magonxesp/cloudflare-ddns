@@ -3,6 +3,13 @@
 mkdir -p build/tmp/jpackage
 mkdir -p build/packages
 
+version="$(cat build/libs/version.txt)"
+
+if [[ "$platform" == "macos" ]]; then
+  version="$(python scripts/macos-package-version.py -v "$version")"
+  echo "The package version has been adapted for macOS 👉️ $version"
+fi
+
 common_options=(
   --name cloudflare-ddns
   --about-url 'https://github.com/magonxesp/cloudflare-ddns'
