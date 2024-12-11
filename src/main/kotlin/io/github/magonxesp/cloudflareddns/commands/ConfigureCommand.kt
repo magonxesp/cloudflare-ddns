@@ -1,11 +1,14 @@
 package io.github.magonxesp.cloudflareddns.commands
 
+import com.github.ajalt.clikt.core.CliktCommand
 import com.github.ajalt.clikt.parameters.options.option
 import com.github.ajalt.clikt.parameters.options.prompt
 import io.github.magonxesp.cloudflareddns.logger
 import io.github.magonxesp.cloudflareddns.services.ConfigurationService
 
-class ConfigureCommand : ConfigurationFileAwareCommand(
+class ConfigureCommand(
+	private val configFile: String? = null
+) : CliktCommand(
     name = "configure",
     help = "Create a new configuration"
 ) {

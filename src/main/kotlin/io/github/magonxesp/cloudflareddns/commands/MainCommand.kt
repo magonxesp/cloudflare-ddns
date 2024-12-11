@@ -12,15 +12,20 @@ import io.github.magonxesp.cloudflareddns.configureLogger
 import kotlin.io.path.Path
 
 class MainCommand : CliktCommand(
-    help = "Update IP address to dns records of Cloudflare"
+	name = "cloudflare-ddns",
+    help = "Update IP address to DNS records of Cloudflare"
 ) {
-	val logsOutput by option("--log-output", help = "stdout or file, defaults to stdout").default(LOGS_OUTPUT_STDOUT)
-	val logsDir by option("--log-dir", help = "The directory to place logs, by default is shown in STDOUT")
+	private val logsOutput by option("--log-output", help = "stdout or file, defaults to stdout").default(LOGS_OUTPUT_STDOUT)
+	private val logsDir by option("--log-dir", help = "The directory to place logs, by default is shown in STDOUT")
 		.default(Path(System.getProperty("user.home"), CLOUDFLAREDDNS_DIRNAME, "logs").toString())
-	val jsonLogs by option("--json-logs", help = "The format of the logs").flag(default = false)
+	private val jsonLogs by option("--json-logs", help = "The format of the logs").flag(default = false)
+	private val configFile by option("--config", "-c", help = "Path to configuration file")
 
     init {
-        subcommands(ConfigureCommand(), SyncCommand())
+        subcommands(
+			ConfigureCommand(configFile),
+			SyncCommand(configFile)
+		)
     }
 
     override fun run() {
