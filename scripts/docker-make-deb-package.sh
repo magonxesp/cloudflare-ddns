@@ -1,11 +1,12 @@
 #!/bin/bash
 
-mkdir -p release
+mkdir -p build/packages
 
 docker build -f package/deb/Dockerfile -t deb-packager:latest .
 
 docker run \
-  -v ./release:/builder/release \
+  --rm \
+  -v ./build/packages:/builder/build/packages \
   deb-packager
 
-sudo chown -R "$UID:$GID" release
+sudo chown -R "$UID:$GID" build/packages

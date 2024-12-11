@@ -16,9 +16,9 @@ And get the jar files in ```build/libs``` directory
 
 * Configure the program
 ```shell script
-$ java -jar cloudflare-ddns.jar configure
+$ cloudflare-ddns configure
 ```
 * Updating the configured hostnames ip with the current ip
 ```shell script
-$ java -jar cloudflare-ddns.jar cloudflare-ddns sync
+$ cloudflare-ddns sync
 ```

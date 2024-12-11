@@ -1,6 +1,7 @@
 #!/bin/bash
 
 mkdir -p build/tmp/jpackage
+mkdir -p build/packages
 
 common_options=(
   --name cloudflare-ddns
@@ -8,7 +9,7 @@ common_options=(
   --app-version "$(cat build/libs/version.txt)"
   --input build/libs
   --main-jar "$(find build/libs -name "*-all.jar" | sed 's/build\/libs\///g')"
-  --dest release
+  --dest build/packages
   --vendor 'MagonxESP'
   --copyright "MagonxESP, (C) $(date +%Y)"
   --description 'Update the DNS records with your current ip on Cloudflare'
