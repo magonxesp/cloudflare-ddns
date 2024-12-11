@@ -1,7 +1,7 @@
 # Cloudflare DDNS
 Update the DNS records with your current ip on Cloudflare
 
-Requeriments:
+Requirements:
 * Gradle 8.7
 * Java 21
 
