@@ -9,7 +9,7 @@ plugins {
 }
 
 group = "io.github.magonxesp"
-version = project.properties["gitTag"] ?: "0.2.1"
+version = project.properties["gitTag"] ?: "0.3.7"
 
 repositories {
     mavenCentral()
