@@ -17,7 +17,7 @@ And get the jar files in ```build/libs``` directory
 For Debian AMD64
 
 ```sh
-curl -Ls https://raw.githubusercontent.com/magonxesp/cloudflare-ddns/refs/heads/main/scripts/install-debian-amd64.sh | sudo bash
+curl -Ls https://raw.githubusercontent.com/magonxesp/cloudflare-ddns/refs/heads/main/scripts/install-debian-amd64.sh | sudo bash -
 ```
 
 ## Usage
