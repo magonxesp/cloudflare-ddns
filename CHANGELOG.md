@@ -15,6 +15,7 @@ All notable changes to this project will be documented in this file.
 - Remove unused actions and use python3
 - Change CMD to build script
 - Remove release pipeline
+- Rename properti gitTag to git.tag
 
 ### Refactor
 
