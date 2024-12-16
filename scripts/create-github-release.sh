@@ -12,7 +12,7 @@ echo "Project version is $project_version"
 
 mkdir -p build/packages
 
-./gradlew -PgitTag="$project_version" clean build
+./gradlew -Pgit.tag="$project_version" clean build
 
 if [[ $? -gt 0 ]]; then
 	echo "Failed building the application jar"
