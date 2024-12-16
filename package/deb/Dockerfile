@@ -20,4 +20,4 @@ COPY LICENSE LICENSE
 
 RUN rm -rf build/tmp/jpackage/*
 
-CMD ["make", "release-debian"]
+CMD ["/builder/scripts/make-package.sh", "debian"]
