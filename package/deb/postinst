@@ -1,4 +1,7 @@
 #!/bin/sh
 
-rm /usr/bin/cloudflare-ddns
+if [ -L "/usr/bin/cloudflare-ddns" ]; then
+  rm /usr/bin/cloudflare-ddns
+fi
+
 ln -s /opt/cloudflare-ddns/bin/cloudflare-ddns /usr/bin/cloudflare-ddns
