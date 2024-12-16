@@ -58,6 +58,6 @@ cp build/packages/* build/tmp/github-release/
 gh release create \
 	--repo magonxesp/cloudflare-ddns \
 	-F build/tmp/changes.md \
-	--latest=false \
+	--verify-tag \
 	"$version"  \
-	'build/tmp/github-release/*'
+	$(find build/tmp/github-release/*)
