@@ -1,17 +1,14 @@
 package io.github.magonxesp.cloudflareddns.commands
 
-import com.github.ajalt.clikt.core.CliktCommand
+import com.github.ajalt.clikt.core.Context
 import io.github.magonxesp.cloudflareddns.clients.httpClient
 import io.github.magonxesp.cloudflareddns.exception.ConfigurationNotFoundException
 import io.github.magonxesp.cloudflareddns.services.ConfigurationService
 import io.github.magonxesp.cloudflareddns.services.SyncService
 
-class SyncCommand(
-	private val configFile: String? = null
-) : CliktCommand(
-    name = "sync",
-    help = "Update the current public IP address to the configured Cloudflare's hostnames"
-) {
+class SyncCommand : ApplicationCommand(name = "sync") {
+	override fun commandHelp(context: Context) = "Update the current public IP address to the configured Cloudflare's hostnames"
+
     override fun run() {
 		echo("\uD83D\uDC49\uFE0F Updating hostnames ip address")
 		val syncService = SyncService(ConfigurationService(configFile))
