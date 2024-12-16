@@ -1,19 +1,13 @@
-.PHONY: first-version bump-version build release-linux publish-release
+.PHONY: first-version bump-version build publish-release
 
 first-version:
-	@python scripts/bump-version.py --first-version
+	@python3 scripts/bump-version.py --first-version
 
 bump-version:
-	@python scripts/bump-version.py
+	@python3 scripts/bump-version.py
 
 build:
 	./gradlew build
-
-release-debian:
-	./scripts/make-package.sh debian
-
-release-macos:
-	./scripts/make-package.sh macos
 
 publish-release:
 	./scripts/create-github-release.sh
