@@ -2,12 +2,19 @@
 
 All notable changes to this project will be documented in this file.
 
-## [0.3.7] - 2024-12-11
+## [0.3.7] - 2024-12-16
+
+### Documentation
+
+- Update README.md
 
 ### Miscellaneous Tasks
 
 - Create release script
 - Fix github release script
+- Remove unused actions and use python3
+- Change CMD to build script
+- Remove release pipeline
 
 ### Refactor
 
