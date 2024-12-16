@@ -2,6 +2,27 @@
 
 All notable changes to this project will be documented in this file.
 
+## [0.4.0] - 2024-12-16
+
+### Bug Fixes
+
+- Java.lang.IllegalStateException: Cannot read from option delegate before parsing command line
+
+### Documentation
+
+- Update README.md
+
+### Features
+
+- Install script
+- Install script for debian amd64 systems
+
+### Miscellaneous Tasks
+
+- Fix github release script
+- Fix postinst script
+- Hardcode the deb package url
+
 ## [0.3.7] - 2024-12-16
 
 ### Documentation
