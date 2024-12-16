@@ -12,13 +12,26 @@ $ ./gradlew build
 ```
 And get the jar files in ```build/libs``` directory
 
-## Usage
+## Installation
 
-* Configure the program
-```shell script
+For Debian AMD64
+
+```sh
+curl https://raw.githubusercontent.com/magonxesp/cloudflare-ddns/refs/heads/main/scripts/install-debian-amd64.sh | sudo bash
+```
+
+## Usage
+* Help
+```sh
+$ cloudflare-ddns -h
+```
+
+* Configure the program with your Cloudflare DNS hostnames
+```sh
 $ cloudflare-ddns configure
 ```
+
 * Updating the configured hostnames ip with the current ip
-```shell script
+```sh
 $ cloudflare-ddns sync
 ```
