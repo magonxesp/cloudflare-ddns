@@ -13,24 +13,24 @@ data class DNSRecordsResponse(
 
 @Serializable
 data class DNSRecord(
-    val content: String,
-    val name: String,
-    val proxied: Boolean? = null,
-    val type: String,
-    val comment: String? = null,
-    @SerialName("created_on")
-    val createdOn: String,
-    val id: String,
-    val locked: Boolean? = null,
-    @SerialName("modified_on")
-    val modifiedOn: String,
-    val proxiable: Boolean,
-    val tags: List<String>? = null,
-    val ttl: Int? = null,
-    @SerialName("zone_id")
-    val zoneId: String? = null,
-    @SerialName("zone_name")
-    val zoneName: String
+	val comment: String,
+	val content: String,
+	val name: String,
+	val proxied: Boolean,
+	val settings: DNSRecordSettings,
+	val tags: List<String>,
+	val ttl: Int,
+	val type: String,
+	val id: String,
+	val proxiable: Boolean
+)
+
+@Serializable
+data class DNSRecordSettings(
+	@SerialName("ipv4_only")
+	val ipv4Only: Boolean,
+	@SerialName("ipv6_only")
+	val ipv6Only: Boolean
 )
 
 @Serializable
