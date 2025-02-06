@@ -2,6 +2,23 @@
 
 All notable changes to this project will be documented in this file.
 
+## [0.4.1] - 2025-02-06
+
+### Bug Fixes
+
+- Dns record response serialization
+
+### Documentation
+
+- Update README.md
+- Update README.md
+
+### Miscellaneous Tasks
+
+- Update install-debian-amd64.sh
+- Update install-debian-amd64.sh
+- Update install-debian-amd64.sh
+
 ## [0.4.0] - 2024-12-16
 
 ### Bug Fixes
