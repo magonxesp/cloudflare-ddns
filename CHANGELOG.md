@@ -2,6 +2,17 @@
 
 All notable changes to this project will be documented in this file.
 
+## [0.4.2] - 2025-02-06
+
+### Bug Fixes
+
+- Close http client when it is used
+- Get only necessary dns list result properties
+
+### Miscellaneous Tasks
+
+- Update install-debian-amd64.sh
+
 ## [0.4.1] - 2025-02-06
 
 ### Bug Fixes
