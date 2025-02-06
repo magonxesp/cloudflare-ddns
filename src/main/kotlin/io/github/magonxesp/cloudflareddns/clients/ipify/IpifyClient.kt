@@ -6,12 +6,12 @@ import io.ktor.client.statement.*
 import io.ktor.http.*
 
 class IpifyClient {
-    suspend fun fetchCurrentPublicIpAddress(): String {
-        val response = httpClient.get("https://api.ipify.org") {
+    suspend fun fetchCurrentPublicIpAddress() = httpClient.use { client ->
+        val response = client.get("https://api.ipify.org") {
 			contentType(ContentType.Text.Plain)
 			accept(ContentType.Text.Plain)
 		}
 
-        return response.bodyAsText()
+        response.bodyAsText()
     }
 }

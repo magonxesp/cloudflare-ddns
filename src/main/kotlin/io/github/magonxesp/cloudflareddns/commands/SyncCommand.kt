@@ -21,7 +21,5 @@ class SyncCommand : ApplicationCommand(name = "sync") {
 				else -> echo("\uD83D\uDE31 Hostnames update process has been failed! Check out the logs for more information")
 			}
 		}
-
-		httpClient.close()
     }
 }
