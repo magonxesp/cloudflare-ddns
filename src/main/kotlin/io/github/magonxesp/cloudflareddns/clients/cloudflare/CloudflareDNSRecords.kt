@@ -13,16 +13,10 @@ data class DNSRecordsResponse(
 
 @Serializable
 data class DNSRecord(
-	val comment: String,
 	val content: String,
 	val name: String,
-	val proxied: Boolean,
-	val settings: DNSRecordSettings,
-	val tags: List<String>,
-	val ttl: Int,
 	val type: String,
 	val id: String,
-	val proxiable: Boolean
 )
 
 @Serializable
