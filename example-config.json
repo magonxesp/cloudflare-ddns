@@ -1,0 +1,16 @@
+{
+    "accounts": [
+        {
+            "account_id": "",
+            "api_token": "",
+            "zones": [
+                {
+                    "zone_id": "",
+                    "names": [
+                        
+                    ]
+                }
+            ]
+        }
+    ]
+}
