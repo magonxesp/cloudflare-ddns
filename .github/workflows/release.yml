@@ -37,6 +37,8 @@ jobs:
         with:
           config: cliff.toml
           args: --unreleased --bump --context --output context.json
+        env:
+          OUTPUT: context.json
 
       - name: Tag new version
         run: |
@@ -49,6 +51,8 @@ jobs:
         with:
           config: cliff.toml
           args: --bump -o CHANGELOG.md
+        env:
+          OUTPUT: CHANGELOG.md
 
       - name: Push CHANGELOG.md changes
         run: |
@@ -61,6 +65,8 @@ jobs:
         with:
           config: cliff.toml
           args: --latest -o current-version.md
+        env:
+          OUTPUT: current-version.md
 
       - uses: ncipollo/release-action@v1
         with:
