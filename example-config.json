@@ -3,6 +3,7 @@
         {
             "account_id": "",
             "api_token": "",
+            "email": "",
             "zones": [
                 {
                     "zone_id": "",

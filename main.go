@@ -2,58 +2,70 @@ package main
 
 import (
 	"flag"
-	"io"
 	"log"
 	"log/slog"
-	"net/http"
 	"os"
 )
 
 var logFile string
 var logJson bool
 var ConfigPath string
-var Logger *slog.Logger
+var Logger = slog.Default()
 
 func main() {
 	flag.Parse()
 	configureLogger()
 
-	// config := ReadConfig()
-	// TODO: iterar config y hacer peticiones a cloudflare
-}
-
-func FetchCurrentIp() (string, error) {
-	resp, err := http.Get("https://api.ipify.org")
+	config, err := ReadConfig()
 	if err != nil {
-		return "", err
-	}
-	defer resp.Body.Close()
-
-	// Leer el cuerpo de la respuesta
-	body, err := io.ReadAll(resp.Body)
-	if err != nil {
-		return "", err
+		Logger.Error("failed to read config", "error", err)
+		os.Exit(1)
 	}
 
-	return string(body), nil
+	ip, err := FetchCurrentIp()
+	if err != nil {
+		Logger.Error("failed to fetch current ip", "error", err)
+		os.Exit(1)
+	}
+
+	hasErrors := false
+
+	for _, account := range config.Accounts {
+		updater := NewDnsUpdater(&account)
+		err = updater.UpdateRecords(ip)
+
+		if err != nil {
+			Logger.Error(
+				"failed to update account records",
+				"account_id", account.Id,
+				"error", err,
+			)
+
+			hasErrors = true
+		}
+	}
+
+	if hasErrors {
+		os.Exit(1)
+	}
 }
 
 func configureLogger() {
-	writter := os.Stdout
+	writer := os.Stdout
 	if logFile != "" {
 		file, err := os.OpenFile(logFile, os.O_APPEND|os.O_WRONLY|os.O_CREATE, 0600)
 		if err != nil {
 			log.Panicln("Unable to open log file", err)
 		}
 
-		writter = file
+		writer = file
 	}
 
 	var handler slog.Handler
-	handler = slog.NewTextHandler(writter, nil)
+	handler = slog.NewTextHandler(writer, nil)
 
 	if logJson {
-		handler = slog.NewJSONHandler(writter, nil)
+		handler = slog.NewJSONHandler(writer, nil)
 	}
 
 	Logger = slog.New(handler)

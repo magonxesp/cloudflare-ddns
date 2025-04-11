@@ -13,6 +13,7 @@ type Zone struct {
 type Account struct {
 	Id       string `json:"account_id"`
 	ApiToken string `json:"api_token"`
+	Email    string `json:"email"`
 	Zones    []Zone `json:"zones"`
 }
 

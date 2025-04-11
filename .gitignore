@@ -1,2 +1,5 @@
 cloudflare-ddns.exe
 cloudflare-ddns
+.idea
+*.iml
+config.json
