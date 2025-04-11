@@ -43,6 +43,7 @@ jobs:
       - name: Tag version
         run: |
           git tag "${{ steps.git-cliff.outputs.changelog }}"
+          git push --tags
 
       - name: Update Changelog
         uses: orhun/git-cliff-action@v3
