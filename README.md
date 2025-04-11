@@ -17,35 +17,35 @@ curl -L https://raw.githubusercontent.com/magonxesp/cloudflare-ddns/refs/heads/f
 Then when you finish editing the ``config.json`` file you are able to run the program on the same working directory
 as ``config.json`` is located.
 
-``sh
+```sh
 cloudflare-ddns
-``
+```
 
 Also, you can specify the ``config.json`` path.
 
-``sh
+```sh
 cloudflare-ddns --config /path/to/config.json
-``
+```
 
 For more options you can see them with the ``-h`` option.
 
-``sh
+```sh
 cloudflare-ddns -h
-``
+```
 
 ## Docker image
 
 Cloudflare DDNS is available as docker image too. You can pull ``magonx/cloudflare-ddns`` and use it.
 
-``sh
+```sh
 docker pull magonx/cloudflare-ddns:latest
-``
+```
 
 And then run the image.
 
-``sh
+```sh
 docker run magonx/cloudflare-ddns:latest -v ./config.json:/config.json
-``
+```
 
 ## Build
 
