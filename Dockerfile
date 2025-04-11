@@ -1,16 +1,23 @@
-FROM eclipse-temurin:21-jdk AS build
+FROM golang:1.24-alpine AS builder
 
 WORKDIR /build
 
 COPY . .
 
-RUN --mount=type=cache,target=/root/.gradle,sharing=private ./gradlew build
+RUN go build
 
-FROM eclipse-temurin:21-jre
+FROM golang:1.24-alpine
 
-WORKDIR /app
+LABEL org.opencontainers.image.title="Cloudflare DDNS"
+LABEL org.opencontainers.image.authors="MagonxESP"
+LABEL org.opencontainers.image.licenses="MIT"
+LABEL org.opencontainers.image.description="A Dynamic DNS client that automatically updates your IP in Cloudflare DNS records, ensuring your domain stays accessible without the need for a static IP."
+LABEL org.opencontainers.image.url="https://github.com/magonxesp/cloudflare-ddns"
+LABEL org.opencontainers.image.source="https://github.com/magonxesp/cloudflare-ddns"
 
-COPY --from=build /build/build/libs/cloudflare-ddns-all.jar /app/cloudflare-ddns.jar
+WORKDIR /
 
-ENTRYPOINT ["java", "-jar", "/app/cloudflare-ddns.jar"]
-CMD ["--keep-syncing"]
+COPY --from=build /build/cloudflare-ddns /opt/ccloudflare-ddns
+RUN chmod +x /opt/ccloudflare-ddns
+
+ENTRYPOINT ["/opt/ccloudflare-ddns"]
