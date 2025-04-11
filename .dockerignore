@@ -3,4 +3,6 @@
 .gitignore
 .gitattributes
 .gradle
-build
+.kotlin
+dist
+release
