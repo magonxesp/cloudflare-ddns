@@ -32,10 +32,14 @@ jobs:
           GOOS=windows GOARCH=arm64 go build -o target/cloudflare-ddns-windows-arm64.exe
 
       - name: Tag version
+        id: tag
         run: |
-          git tag "$(date +%Y-%m-%d.%H%M%S)"
+          export VERSION="$(date +%Y-%m-%d.%H%M%S)"
+          git tag "$VERSION"
           git push --tags
+          echo "version=$VERSION" >> "$GITHUB_OUTPUT"
 
       - uses: ncipollo/release-action@v1
         with:
+          tag: ${{ steps.tag.outputs.version }}
           artifacts: 'target/*'
