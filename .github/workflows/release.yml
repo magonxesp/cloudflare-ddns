@@ -14,9 +14,8 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-
-      - name: Install system dependencies
-        run: sudo apt install -y jq
+        with:
+          fetch-depth: 0
 
       - uses: actions/setup-go@v5
         with:
@@ -34,17 +33,16 @@ jobs:
 
       - name: Bump next version
         uses: orhun/git-cliff-action@v3
+        id: git-cliff
         with:
           config: cliff.toml
-          args: --unreleased --bump --context --output context.json
+          args: --unreleased --bump -o current-version.md
         env:
-          OUTPUT: context.json
+          OUTPUT: current-version.md
 
-      - name: Tag new version
+      - name: Tag version
         run: |
-          export VERSION=$(cat context.json | jq '.[0].version' | tr -d '"')
-          git tag "$VERSION"
-          git push --tags
+          git tag "${{ steps.git-cliff.outputs.changelog }}"
 
       - name: Update Changelog
         uses: orhun/git-cliff-action@v3
@@ -59,14 +57,6 @@ jobs:
           git add CHANGELOG.md
           git commit -m "update CHANGELOG.md"
           git push
-
-      - name: Generate a changelog
-        uses: orhun/git-cliff-action@v3
-        with:
-          config: cliff.toml
-          args: --latest -o current-version.md
-        env:
-          OUTPUT: current-version.md
 
       - uses: ncipollo/release-action@v1
         with:
