@@ -31,37 +31,11 @@ jobs:
           GOOS=windows GOARCH=amd64 go build -o target/cloudflare-ddns-windows-amd64.exe
           GOOS=windows GOARCH=arm64 go build -o target/cloudflare-ddns-windows-arm64.exe
 
-      - name: Bump next version
-        uses: orhun/git-cliff-action@v3
-        id: git-cliff
-        with:
-          config: cliff.toml
-          args: --unreleased --bump -o current-version.md
-        env:
-          OUTPUT: current-version.md
-
       - name: Tag version
         run: |
-          git tag "${{ steps.git-cliff.outputs.version }}"
+          git tag "$(date +%Y-%m-%d.%H%M%S)"
           git push --tags
-
-      - name: Update Changelog
-        uses: orhun/git-cliff-action@v3
-        with:
-          config: cliff.toml
-          args: --bump -o CHANGELOG.md
-        env:
-          OUTPUT: CHANGELOG.md
-
-      - name: Push CHANGELOG.md changes
-        run: |
-          git config user.name 'github-actions[bot]'
-          git config user.email 'github-actions[bot]@users.noreply.github.com'
-          git add CHANGELOG.md
-          git commit -m "update CHANGELOG.md"
-          git push
 
       - uses: ncipollo/release-action@v1
         with:
           artifacts: 'target/*'
-          bodyFile: 'current-version.md'

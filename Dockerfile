@@ -17,7 +17,7 @@ LABEL org.opencontainers.image.source="https://github.com/magonxesp/cloudflare-d
 
 WORKDIR /
 
-COPY --from=build /build/cloudflare-ddns /opt/ccloudflare-ddns
+COPY --from=builder /build/cloudflare-ddns /opt/ccloudflare-ddns
 RUN chmod +x /opt/ccloudflare-ddns
 
 ENTRYPOINT ["/opt/ccloudflare-ddns"]
