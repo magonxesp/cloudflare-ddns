@@ -5,6 +5,9 @@ on:
   push:
     branches:
       - main
+    paths-ignore:
+      - 'README.md'
+      - 'CHANGELOG.md'
 
 jobs:
   build:
@@ -29,7 +32,7 @@ jobs:
           GOOS=windows GOARCH=amd64 go build -o target/cloudflare-ddns-windows-amd64.exe
           GOOS=windows GOARCH=arm64 go build -o target/cloudflare-ddns-windows-arm64.exe
 
-      - name: Bump version
+      - name: Bump next version
         uses: orhun/git-cliff-action@v3
         with:
           config: cliff.toml
@@ -40,6 +43,18 @@ jobs:
           export VERSION=$(cat context.json | jq '.[0].version' | tr -d '"')
           git tag "$VERSION"
           git push --tags
+
+      - name: Update Changelog
+        uses: orhun/git-cliff-action@v3
+        with:
+          config: cliff.toml
+          args: --bump -o CHANGELOG.md
+
+      - name: Push CHANGELOG.md changes
+        run: |
+          git add CHANGELOG.md
+          git commit -m "update CHANGELOG.md"
+          git push
 
       - name: Generate a changelog
         uses: orhun/git-cliff-action@v3
