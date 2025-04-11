@@ -1,6 +1,0 @@
-services:
-  cloudflareddns:
-    build: .
-    command: sync
-    volumes:
-      - ${HOME}/.cloudflare-ddns:/root/.cloudflare-ddns
