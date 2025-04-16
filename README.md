@@ -11,7 +11,7 @@ First you need the ``config.json`` file for configure the Account, API Token and
 You can make it downloading the sample configuration.
 
 ```sh
-curl -L https://raw.githubusercontent.com/magonxesp/cloudflare-ddns/refs/heads/feature/go-version/example-config.json -o config.json
+curl -L https://raw.githubusercontent.com/magonxesp/cloudflare-ddns/refs/heads/main/example-config.json -o config.json
 ```
 
 Then when you finish editing the ``config.json`` file you are able to run the program on the same working directory
