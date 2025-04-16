@@ -2,18 +2,18 @@
 
 $base_url="https://github.com/magonxesp/cloudflare-ddns/releases/latest/download"
 $arch=$(uname -m)
-$so=$(uname)
+$platform=$(uname -s)
 
-if [[ "$so" == "Darwin" ]] && [[ "$arch" == "arm64" ]]
+if [[ "$platform" == "Darwin" ]] && [[ "$arch" == "arm64" ]]
 then
 	$artifact="cloudflare-ddns-darwin-arm64"
-elif [[ "$so" == "Darwin" ]] && [[ "$arch" == "x86_64" ]]
+elif [[ "$platform" == "Darwin" ]] && [[ "$arch" == "x86_64" ]]
 then
 	$artifact="cloudflare-ddns-darwin-amd64"
-elif [[ "$so" == "Linux" ]] && [[ "$arch" == "arm64" ]]
+elif [[ "$platform" == "Linux" ]] && [[ "$arch" == "arm64" ]]
 then
 	$artifact="cloudflare-ddns-linux-arm64"
-elif [[ "$so" == "Linux" ]] && [[ "$arch" == "x86_64" ]]
+elif [[ "$platform" == "Linux" ]] && [[ "$arch" == "x86_64" ]]
 then
 	$artifact="cloudflare-ddns-linux-amd64"
 else
