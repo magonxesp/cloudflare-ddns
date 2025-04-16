@@ -5,6 +5,22 @@ ensuring your domain stays accessible without the need for a static IP. 🔥
 Requirements:
 * Go >= 1.24
 
+## Install
+
+You can run the install script on UNIX like systems, for windows you can download the binary on the [latest release](https://github.com/magonxesp/cloudflare-ddns/releases/latest)
+
+```sh
+curl -L https://raw.githubusercontent.com/magonxesp/cloudflare-ddns/refs/heads/main/scripts/install.sh | sudo bash -
+```
+
+### Uninstall
+
+You can uninstall the program removing the executable.
+
+```sh
+sudo rm /usr/local/bin/cloudflare-ddns
+```
+
 ## Usage
 
 First you need the ``config.json`` file for configure the Account, API Token and Zone DNS records to be updated.
