@@ -1,33 +1,52 @@
-#!/bin/bash
+#!/usr/bin/env bash
 
-base_url="https://github.com/magonxesp/cloudflare-ddns/releases/latest/download"
-arch="$(uname -m)"
-platform="$(uname -s)"
+set -euo pipefail
 
-if [[ "$platform" == "Darwin" ]] && [[ "$arch" == "arm64" ]]
-then
-	artifact="cloudflare-ddns-darwin-arm64"
-elif [[ "$platform" == "Darwin" ]] && [[ "$arch" == "x86_64" ]]
-then
-	artifact="cloudflare-ddns-darwin-amd64"
-elif [[ "$platform" == "Linux" ]] && [[ "$arch" == "arm64" ]]
-then
-	artifact="cloudflare-ddns-linux-arm64"
-elif [[ "$platform" == "Linux" ]] && [[ "$arch" == "x86_64" ]]
-then
-	artifact="cloudflare-ddns-linux-amd64"
-else
-	echo "Unsupported platform or architecture"
-	exit 1
+repository="magonxesp/cloudflare-ddns"
+base_url="https://github.com/$repository/releases/latest/download"
+
+if [[ "$(uname -s)" != "Linux" ]]; then
+  echo "cloudflare-ddns packages are only available for Linux" >&2
+  exit 1
 fi
 
-which curl
-
-if [[ $? -ne 0 ]]; then
-	echo "You need curl installed"
-	exit 2
+if [[ "${EUID:-$(id -u)}" -ne 0 ]]; then
+  echo "Run this installer as root, for example with sudo" >&2
+  exit 1
 fi
 
-curl -OL "$base_url/$artifact"
-mv "$artifact" /usr/local/bin/cloudflare-ddns
-chmod +x /usr/local/bin/cloudflare-ddns
+for command in curl dpkg mktemp; do
+  if ! command -v "$command" >/dev/null 2>&1; then
+    echo "Required command not found: $command" >&2
+    exit 2
+  fi
+done
+
+architecture="$(dpkg --print-architecture)"
+case "$architecture" in
+  amd64 | arm64)
+    ;;
+  *)
+    echo "Unsupported Debian architecture: $architecture" >&2
+    exit 1
+    ;;
+esac
+
+artifact="cloudflare-ddns-linux-$architecture.deb"
+temporary_directory="$(mktemp -d)"
+package="$temporary_directory/$artifact"
+
+cleanup() {
+  rm -rf "$temporary_directory"
+}
+trap cleanup EXIT
+
+echo "Downloading $artifact from the latest GitHub release"
+curl \
+  --fail \
+  --location \
+  --show-error \
+  --output "$package" \
+  "$base_url/$artifact"
+
+dpkg --install "$package"

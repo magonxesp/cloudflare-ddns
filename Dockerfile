@@ -1,23 +1,19 @@
-FROM golang:1.24-alpine AS builder
+FROM rust:1.97-alpine AS builder
 
 WORKDIR /build
 
-COPY . .
+RUN apk add --no-cache musl-dev
 
-RUN go build
+COPY Cargo.toml Cargo.lock ./
+COPY src ./src
 
-FROM golang:1.24-alpine
+RUN cargo build --locked --release
 
-LABEL org.opencontainers.image.title="Cloudflare DDNS"
-LABEL org.opencontainers.image.authors="MagonxESP"
-LABEL org.opencontainers.image.licenses="MIT"
-LABEL org.opencontainers.image.description="A Dynamic DNS client that automatically updates your IP in Cloudflare DNS records, ensuring your domain stays accessible without the need for a static IP."
-LABEL org.opencontainers.image.url="https://github.com/magonxesp/cloudflare-ddns"
-LABEL org.opencontainers.image.source="https://github.com/magonxesp/cloudflare-ddns"
+FROM alpine:3
 
 WORKDIR /
 
-COPY --from=builder /build/cloudflare-ddns /opt/ccloudflare-ddns
-RUN chmod +x /opt/ccloudflare-ddns
+RUN apk add --no-cache ca-certificates
+COPY --from=builder /build/target/release/cloudflare-ddns /usr/local/bin/cloudflare-ddns
 
-ENTRYPOINT ["/opt/ccloudflare-ddns"]
+ENTRYPOINT ["/usr/local/bin/cloudflare-ddns"]

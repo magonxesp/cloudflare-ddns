@@ -1,40 +1,68 @@
 name: Build release
+
 permissions:
   contents: write
+
 on:
   push:
     branches:
       - main
     paths-ignore:
-      - 'README.md'
-      - 'CHANGELOG.md'
+      - README.md
+      - CHANGELOG.md
 
 jobs:
   build:
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - runner: ubuntu-latest
+            architecture: amd64
+            artifact: cloudflare-ddns-linux-amd64.deb
+          - runner: ubuntu-24.04-arm
+            architecture: arm64
+            artifact: cloudflare-ddns-linux-arm64.deb
+
+    runs-on: ${{ matrix.runner }}
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: dtolnay/rust-toolchain@stable
+
+      - name: Build deb package
+        run: |
+          make deb
+          cp target/release/bundle/cloudflare-ddns_*_${{ matrix.architecture }}.deb ${{ matrix.artifact }}
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: ${{ matrix.artifact }}
+          path: ${{ matrix.artifact }}
+          if-no-files-found: error
+
+  release:
+    needs:
+      - build
     runs-on: ubuntu-latest
+    outputs:
+      version: ${{ steps.tag.outputs.version }}
+
     steps:
       - uses: actions/checkout@v4
         with:
           fetch-depth: 0
 
-      - uses: actions/setup-go@v5
+      - uses: actions/download-artifact@v4
         with:
-          go-version: '^1.24.0'
-
-      - name: Compile native executables
-        run: |
-          mkdir target
-          GOOS=darwin GOARCH=amd64 go build -o target/cloudflare-ddns-darwin-amd64
-          GOOS=darwin GOARCH=arm64 go build -o target/cloudflare-ddns-darwin-arm64
-          GOOS=linux GOARCH=amd64 go build -o target/cloudflare-ddns-linux-amd64
-          GOOS=linux GOARCH=arm64 go build -o target/cloudflare-ddns-linux-arm64
-          GOOS=windows GOARCH=amd64 go build -o target/cloudflare-ddns-windows-amd64.exe
-          GOOS=windows GOARCH=arm64 go build -o target/cloudflare-ddns-windows-arm64.exe
+          path: target
+          merge-multiple: true
 
       - name: Tag version
         id: tag
         run: |
-          export VERSION="$(date +%Y-%m-%d.%H%M%S)"
+          VERSION="$(date +%Y-%m-%d.%H%M%S)"
           git tag "$VERSION"
           git push --tags
           echo "version=$VERSION" >> "$GITHUB_OUTPUT"
@@ -42,20 +70,24 @@ jobs:
       - uses: ncipollo/release-action@v1
         with:
           tag: ${{ steps.tag.outputs.version }}
-          artifacts: 'target/*'
+          artifacts: target/*
 
-      - name: Set up Docker Buildx
-        uses: docker/setup-buildx-action@v3
+  docker:
+    needs: release
+    runs-on: ubuntu-latest
 
-      - name: Login to Docker Hub
-        uses: docker/login-action@v3
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: docker/setup-buildx-action@v3
+
+      - uses: docker/login-action@v3
         with:
           username: ${{ secrets.DOCKERHUB_USERNAME }}
           password: ${{ secrets.DOCKERHUB_TOKEN }}
 
-      - name: Build and push
-        uses: docker/build-push-action@v6
+      - uses: docker/build-push-action@v6
         with:
           context: .
           push: true
-          tags: magonx/cloudflare-ddns:${{ steps.tag.outputs.version }},magonx/cloudflare-ddns:latest
+          tags: magonx/cloudflare-ddns:${{ needs.release.outputs.version }},magonx/cloudflare-ddns:latest
