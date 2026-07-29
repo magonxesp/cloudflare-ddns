@@ -1,5 +1,6 @@
-cloudflare-ddns.exe
-cloudflare-ddns
+target/
+.DS_Store
 .idea
 *.iml
-config.json
+config.yaml
+/sandbox

@@ -1,0 +1,22 @@
+services:
+  packager:
+    image: rust:latest
+    working_dir: /src
+    command: ["make", "deb"]
+    volumes:
+      - ./:/src
+
+  # For testing deb instalation
+  sandbox:
+    image: debian:latest
+    working_dir: /src
+    command: ["/bin/bash"]
+    volumes:
+      - ./sandbox/home:/root
+      - ./:/src
+
+  # For testing docker container
+  cloudflare_ddns:
+    build: .
+    volumes:
+      - ./sandbox/home:/root

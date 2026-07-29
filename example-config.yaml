@@ -1,0 +1,17 @@
+logging:
+  # Accepted levels: trace, debug, info, warn and error.
+  level: info
+  # Omit this setting to log only to stdout.
+  file: ~/.local/state/cloudflare-ddns/cloudflare-ddns.log
+
+cloudflare:
+  api_token: your-cloudflare-api-token
+  timeout_seconds: 15
+
+zones:
+  - zone_id: your-zone-id
+    records:
+      - name: home.example.com
+        type: A
+      - name: vpn.example.com
+        type: AAAA

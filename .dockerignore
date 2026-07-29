@@ -6,3 +6,7 @@
 .kotlin
 dist
 release
+.git
+target
+config.yaml
+sandbox
